@@ -1,0 +1,8 @@
+{
+  "name": "BJJ Gym Registration & Attendance Manager",
+  "description": "Manage Brazilian Jiu-Jitsu student registrations, class check-ins, attendance tracking, payment ledgers, and membership balances.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

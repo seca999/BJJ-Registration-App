@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  html.theme-dark body {
+    background-color: #0c0a09;
+    color: #f5f5f4;
+  }
+
+  html.theme-light body {
+    background-color: #f8f8f6;
+    color: #1c1917;
+  }
+}
+
+/* Light Theme Overrides */
+html.theme-light {
+  color-scheme: light;
+}
+
+html.theme-light .bg-stone-950 {
+  background-color: #f4f4f2 !important;
+  color: #1c1917 !important;
+}
+
+html.theme-light .bg-stone-900 {
+  background-color: #ffffff !important;
+  color: #1c1917 !important;
+  border-color: #e5e5e0 !important;
+}
+
+html.theme-light .bg-stone-850,
+html.theme-light .bg-stone-800 {
+  background-color: #f5f5f2 !important;
+  color: #1c1917 !important;
+  border-color: #e2e2dd !important;
+}
+
+html.theme-light .bg-stone-800\/60,
+html.theme-light .bg-stone-800\/80 {
+  background-color: #ebebe6 !important;
+  color: #1c1917 !important;
+}
+
+html.theme-light .border-stone-800,
+html.theme-light .border-stone-800\/80,
+html.theme-light .border-stone-800\/60,
+html.theme-light .border-stone-700,
+html.theme-light .border-stone-700\/60 {
+  border-color: #e5e5e0 !important;
+}
+
+html.theme-light .text-white {
+  color: #0c0a09 !important;
+}
+
+html.theme-light .text-stone-100 {
+  color: #1c1917 !important;
+}
+
+html.theme-light .text-stone-200 {
+  color: #292524 !important;
+}
+
+html.theme-light .text-stone-300 {
+  color: #44403c !important;
+}
+
+html.theme-light .text-stone-400 {
+  color: #78716c !important;
+}
+
+/* Ensure bright colored buttons retain pure white text */
+html.theme-light .bg-red-600,
+html.theme-light .bg-red-700,
+html.theme-light .bg-emerald-600,
+html.theme-light .bg-emerald-700,
+html.theme-light .bg-blue-600,
+html.theme-light .bg-blue-700,
+html.theme-light .bg-amber-600,
+html.theme-light .bg-purple-600,
+html.theme-light .text-white-forced {
+  color: #ffffff !important;
+}
+
+html.theme-light input,
+html.theme-light select,
+html.theme-light textarea {
+  background-color: #ffffff !important;
+  color: #1c1917 !important;
+  border-color: #d6d3ce !important;
+}
+
+.font-raven {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.05em;
+}
+
+.font-mono-digits {
+  font-family: 'JetBrains Mono', monospace;
+  font-feature-settings: "tnum";
+}
+
+/* Custom scrollbar hiding utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
