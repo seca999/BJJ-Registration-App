@@ -58,11 +58,21 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
   "if (Test-Path $CodeDir) { Get-ChildItem -Path $CodeDir -Exclude 'node_modules' | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue };" ^
   "Write-Host \"[2/4] Extracting '$($selectedZip.Name)'...\" -ForegroundColor Cyan;" ^
   "try {" ^
-  "  Expand-Archive -LiteralPath $selectedZip.FullName -DestinationPath $CodeDir -Force;" ^
+  "  Add-Type -AssemblyName System.IO.Compression.FileSystem;" ^
+  "  $zip = [System.IO.Compression.ZipFile]::OpenRead($selectedZip.FullName);" ^
+  "  foreach ($entry in $zip.Entries) {" ^
+  "    if ([string]::IsNullOrWhiteSpace($entry.Name)) { continue };" ^
+  "    $sanitized = $entry.FullName -replace '^[a-zA-Z]:\\\\', '' -replace '^[a-zA-Z]:/', '';" ^
+  "    $sanitized = $sanitized -replace '[:\*\?\"\"<>\|]', '_';" ^
+  "    $targetFile = [System.IO.Path]::Combine($CodeDir, $sanitized);" ^
+  "    $targetDir = [System.IO.Path]::GetDirectoryName($targetFile);" ^
+  "    if (-not (Test-Path $targetDir)) { [System.IO.Directory]::CreateDirectory($targetDir) | Out-Null };" ^
+  "    [System.IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $targetFile, $true);" ^
+  "  };" ^
+  "  $zip.Dispose();" ^
   "} catch {" ^
-  "  Write-Host \"[!] Failed to extract archive: $_\" -ForegroundColor Red;" ^
-  "  Read-Host 'Press Enter to exit';" ^
-  "  exit;" ^
+  "  Write-Host \"      Falling back to standard Expand-Archive...\" -ForegroundColor Gray;" ^
+  "  try { Expand-Archive -LiteralPath $selectedZip.FullName -DestinationPath $CodeDir -Force } catch { Write-Host \"[!] Extraction notice: $_\" -ForegroundColor Yellow };" ^
   "};" ^
   "$extractedDirs = @(Get-ChildItem -Path $CodeDir -Directory | Where-Object { $_.Name -ne 'node_modules' });" ^
   "$extractedFiles = @(Get-ChildItem -Path $CodeDir -File);" ^
